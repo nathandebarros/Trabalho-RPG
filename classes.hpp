@@ -1,6 +1,12 @@
 #ifndef CLASSES_H
 #define CLASSES_H
 
+
+#include <iostream>
+#include <string>
+
+
+using namespace std;
 class Character{
     public:
         int hp;
@@ -16,8 +22,19 @@ class Character{
         int Defense();
 };
 
-class Player: Character{
+class Equip{
+    public:
+        std::string nome;
+        std::string type;
+};
 
+class Assistent:Character{
+
+};
+
+class Player: Character{
+    public:
+        Equip equipamento;
 };
 
 class Boss: Character{
