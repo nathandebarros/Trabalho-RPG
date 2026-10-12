@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <random>
 
 
 using namespace std;
@@ -48,6 +49,14 @@ class Character{
         };
 };
 
+class Dice{
+    int faces;
+
+    int rolldice(){
+
+    }
+}
+
 class Equip{
     public:
         std::string Name;
@@ -91,7 +100,9 @@ class Player: Character{
         Race playerRace;
         Equip Weapon;
         Equip Armor;
+        int armorClass;
 
+<<<<<<< HEAD
     public:
         void setPlayerClass(Class pClass);
         Class getPlayerClass();
@@ -101,6 +112,18 @@ class Player: Character{
         void Attack();
 
         void Defense();
+=======
+        void Attack() {
+            int damage;
+            int bonus;
+            cout << Name << " usou " << Weapon.Name << " e desferiu um golpe de " << damage << de dano;
+        };
+
+        void Defense(){
+            if(armorClass > )
+            cout << Name << " usou " << Armor.Name << " para se defender\n";
+        };
+>>>>>>> fcd084ec4801278faa6ac2ae084ca6ccee224ea1
         
 };
 
