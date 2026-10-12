@@ -8,8 +8,8 @@
 
 using namespace std;
 class Character{
-    public:
-        std::string Name;
+    private:
+        std::string name;
         int hp;
         int xp;
         int strength;
@@ -18,6 +18,27 @@ class Character{
         int intelligence;
         int wisdom;
         int charisma;
+    
+    public:
+        void setName(std::string name);
+        std::string getName() const;
+        void setHp(int hpn);
+        int getHp() const;
+        void setXp(int xpn);
+        int getXp() const;
+        void setStrenght(int strg);
+        int getStrenght() const;
+        void setDexterity(int dext);
+        int getDexterity() const;
+        void setConstitution(int cons);
+        int getConstitution() const;
+        void setIntelligence(int intel);
+        int getIntelligence() const;
+        void setWisdom(int wisd);
+        int getWisdom() const;
+        void setCharisma(int chr);
+        int getCharisma() const;
+        
 
         void Attack(){
             cout << "ataque básico";
@@ -34,14 +55,22 @@ class Equip{
 };
 
 class Class{
-    public:
+    private:
         std::string className;
+
+    public:
+        void setClassName(std::string name);
+        std::string getClassName() const;
 
 };
 
 class Race{
-    public:
+    private:
         std::string raceName;
+
+    public:
+        void setRaceName(std::string race);
+        std::string getRaceName() const;
 
 };
 
@@ -52,23 +81,26 @@ class Loot{
 };
 
 class Assistant:Character{
-
+    private:
+        std::string name;
 };
 
 class Player: Character{
-    public:
+    private:
         Class playerClass;
         Race playerRace;
         Equip Weapon;
         Equip Armor;
 
-        void Attack() {
-            cout << Name << " usou " << Weapon.Name << " e desferiu um golpe\n";
-        };
+    public:
+        void setPlayerClass(Class pClass);
+        Class getPlayerClass();
 
-        void Defense(){
-            cout << Name << " usou " << Armor.Name << " para se defender\n";
-        };
+        Player ();
+
+        void Attack();
+
+        void Defense();
         
 };
 
@@ -82,29 +114,19 @@ class Enemy: public Character{
 
 class Minions:Enemy{
     public:
-        void Attack() {
-            cout << Name << " usou " << Weapon.Name << " e desferiu um golpe\n";
-        };
+        void Attack();
 
-        void Defense(){
-            cout << Name << " usou " << Armor.Name << " para se defender\n";
-        };
+        void Defense();
 
 };
 
 class Boss: public Enemy{
     public:
-        void Attack(){
-            cout << Name << " usou " << Weapon.Name << " e desferiu um ataque básico\n";
-        };
+        void Attack();
 
-        void Defense(){
-            cout << Name <<" usou " << Armor.Name << "para defender\n";
-        };
+        void Defense();
 
-        void SpecialAttack(){
-            cout << Name << "Usou " << Weapon.Name << " e desferiu um ataque avassalador\n";
-        };
+        void SpecialAttack();
 };
 
 #endif
