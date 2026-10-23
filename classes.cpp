@@ -2,16 +2,40 @@
 #include "classes.hpp"
 #include <random>
 
-void Character::setName(std::string namec){
-    name = namec;
+
+nameList = {"Dian", "Nese", "Falledrick", "Mae", "Valhein", "Dol", "Earl", "Cedria", "Azulei", "Yun", "Cybel", "Ina", "Foolly", "Skili", "Juddol", "Janver", "Viska", "Hirschendy", "Silka", "Hellsturn", "Essa", "Mykonos", "Fenton", "Tyrena", "Inqoul", "Mankov", "Derilia", "Hexema", "Wyton", "Kaedum", "Gouram", "Libertia", "Berasailles", "Juxta", "Tae’hr", "Comtol", "Gherak", "Hest", "Qony", "Masamka", "Twyll", "Tenos", "Axim", "Westrynda", "Saphros", "Olkham", "Handok", "Kemetra", "Yos", "Wentingle", "Ames", "Molosh", "Inkov", "Phasasia", "Ziedinghal", "Bregul", "Eishvack", "Lora", "Krenting", "Symbole", "Elignoir", "Keligkrul", "Qwey", "Vindinglag", "Kusakira", "Weme", "Fayd", "Rushvita", "Vulkor", "Amers", "Ortos", "Vanius", "Chandellia", "Lilikol", "Catca", "Cormus", "Yuela", "Ariban", "Tryton", "Fesscha", "Opalul", "Zakzos", "Hortimer", "Anklos", "Dushasiez", "Polop", "Mektal", "Orinphus", "Denatra", "Elkazzi", "Dyne", "Domos", "Letryal", "Manniv", "Sylestia", "Esnol", "Fasafuros", "Ghanfer", "Kahnite", "Sweyda", "Uylis", "Retenia", "Bassos", "Arkensval", "Impelos", "Grandius", "Fulcrux", "Lassahein", "Edsveda", "Earakun", "Fous", "Maas", "Basenphal", "Jubidya", "Divya", "Kosunten", "Ordayius", "Dozzer", "Gangher", "Escha", "Manchul", "Kempos", "Kulo", "Urtench", "Kesta", "Helahona", "Ryte", "Falcia", "Umannos", "Urkensvall", "Fedra", "Bulkensar", "Comia", "Tyul", "Lasendarl"}
+
+void Character::setName(void){
+    std::vector<std::string> nameList = {
+        "Dian", "Nese", "Falledrick", "Mae", "Valhein", "Dol", "Earl", "Cedria", 
+        "Azulei", "Yun", "Cybel", "Ina", "Foolly", "Skili", "Juddol", "Janver", 
+        "Viska", "Hirschendy", "Silka", "Hellsturn", "Essa", "Mykonos", "Fenton", 
+        "Tyrena", "Inqoul", "Mankov", "Derilia", "Hexema", "Wyton", "Kaedum", 
+        "Gouram", "Libertia", "Berasailles", "Juxta", "Tae’hr", "Comtol", "Gherak", 
+        "Hest", "Qony", "Masamka", "Twyll", "Tenos", "Axim", "Westrynda", "Saphros", 
+        "Olkham", "Handok", "Kemetra", "Yos", "Wentingle", "Ames", "Molosh", "Inkov", 
+        "Phasasia", "Ziedinghal", "Bregul", "Eishvack", "Lora", "Krenting", "Symbole", 
+        "Elignoir", "Keligkrul", "Qwey", "Vindinglag", "Kusakira", "Weme", "Fayd", 
+        "Rushvita", "Vulkor", "Amers", "Ortos", "Vanius", "Chandellia", "Lilikol", 
+        "Catca", "Cormus", "Yuela", "Ariban", "Tryton", "Fesscha", "Opalul", "Zakzos", 
+        "Hortimer", "Anklos", "Dushasiez", "Polop", "Mektal", "Orinphus", "Denatra", 
+        "Elkazzi", "Dyne", "Domos", "Letryal", "Manniv", "Sylestia", "Esnol", "Fasafuros", 
+        "Ghanfer", "Kahnite", "Sweyda", "Uylis", "Retenia", "Bassos", "Arkensval", 
+        "Impelos", "Grandius", "Fulcrux", "Lassahein", "Edsveda", "Earakun", "Fous", 
+        "Maas", "Basenphal", "Jubidya", "Divya", "Kosunten", "Ordayius", "Dozzer", 
+        "Gangher", "Escha", "Manchul", "Kempos", "Kulo", "Urtench", "Kesta", "Helahona", 
+        "Ryte", "Falcia", "Umannos", "Urkensvall", "Fedra", "Bulkensar", "Comia", 
+        "Tyul", "Lasendarl"};
+
+    name = nameList[std::rand()  % nameList.size()];
 }
 
 std::string Character::getName() const{
     return name;
 }
 
-void Character::setHp(int hpn) {
-    hp = hpn;
+void Character::setHp(void) {
+    hp = (std::rand() % 20) + 1;
 }
 
 int Character::getHp() const{
@@ -19,7 +43,7 @@ int Character::getHp() const{
 }
 
 void Character::setXp(int xpn) {
-    xp = xpn;
+    xp = (std::rand() % 20) + 1;
 }
 
 int Character::getXp() const{
@@ -27,15 +51,15 @@ int Character::getXp() const{
 }
 
 void Character::setStrenght(int strg){
-    strength = strg;
+    strenght = (std::rand() % 20) + 1;
 }
 
 int Character::getStrenght() const{
-    return strength;
+    return strenght;
 }
 
 void Character::setDexterity(int dext){
-    dexterity = dext;
+    dexterity = (std::rand() % 20) + 1;
 }
 
 int Character::getDexterity() const{
@@ -43,7 +67,7 @@ int Character::getDexterity() const{
 }
 
 void Character::setConstitution(int cons){
-    constitution = cons;
+    constitution = (std::rand() % 20) + 1;
 }
 
 int Character::getConstitution() const{
@@ -51,7 +75,7 @@ int Character::getConstitution() const{
 }
 
 void Character::setIntelligence(int intel){
-    intelligence = intel;
+    intelligence = (std::rand() % 20) + 1;
 }
 
 int Character::getIntelligence() const{
@@ -60,7 +84,7 @@ int Character::getIntelligence() const{
 
 
 void Character::setWisdom(int wisd){
-    wisdom = wisd;
+    wisdom = (std::rand() % 20) + 1;
 }
 
 int Character::getWisdom() const{
@@ -68,15 +92,16 @@ int Character::getWisdom() const{
 }
 
 void Character::setCharisma(int chr){
-    charisma = chr;
+    charisma = (std::rand() % 20) + 1;
 }
 
 int Character::getCharisma() const{
     return charisma;
 }
 
-void Class::setClassName(std::string name) {
-    className = name;
+void Class::setClassName(void) {
+std::vector<std::string> nameClass = {"Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"};
+    className = nameClass[std::rand() % nameClass.size()];
 }
 
 std::string Class::getClassName() const{
@@ -97,4 +122,20 @@ void Player::setPlayerClass(Class pClass){
 
 Class Player::getPlayerClass() {
     return playerClass;
+}
+
+void Player::creatPlayer(int n){
+    std::vetor<Player> players;
+    for(int i = 0; i < n; i++){
+        players[i].name = setName();
+        players[i].class = setClassName();
+        players[i].hp = setHp();
+        players[i].xp = setXp();
+        players[i].strenght = setStrenght();
+        players[i].dexterity = setDexterity();
+        players[i].constituition = setConstitution();
+        players[i].intelligence = setIntelligence();
+        players[i].wisdom = setWisdom();
+        players[i];charisma = setCharisma();
+    }
 }
