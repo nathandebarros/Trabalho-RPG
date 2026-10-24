@@ -13,7 +13,7 @@ class Character{
         std::string name;
         int hp;
         int xp;
-        int strength;
+        int strenght;
         int dexterity;
         int constitution;
         int intelligence;
@@ -52,36 +52,15 @@ class Character{
 class Dice{
     int faces;
 
-    int rolldice(){
-
-    }
-}
+    int rolldice();
+};
 
 class Equip{
-    public:
+    private:
         std::string Name;
         std::string Type;
 };
 
-class Class{
-    private:
-        std::string className;
-
-    public:
-        void setClassName(std::string name);
-        std::string getClassName() const;
-
-};
-
-class Race{
-    private:
-        std::string raceName;
-
-    public:
-        void setRaceName(std::string race);
-        std::string getRaceName() const;
-
-};
 
 class Loot{
     public:
@@ -96,34 +75,23 @@ class Assistant:Character{
 
 class Player: Character{
     private:
-        Class playerClass;
-        Race playerRace;
+        std::string playerClass;
+        std::string race;
         Equip Weapon;
         Equip Armor;
-        int armorClass;
 
-<<<<<<< HEAD
     public:
-        void setPlayerClass(Class pClass);
-        Class getPlayerClass();
 
-        Player ();
+        void setPlayerClass();
+        void getPlayerClass();
+
+        void creatPlayer(int n);
 
         void Attack();
 
-        void Defense();
-=======
-        void Attack() {
-            int damage;
-            int bonus;
-            cout << Name << " usou " << Weapon.Name << " e desferiu um golpe de " << damage << de dano;
-        };
+        void SpecialAttack();
 
-        void Defense(){
-            if(armorClass > )
-            cout << Name << " usou " << Armor.Name << " para se defender\n";
-        };
->>>>>>> fcd084ec4801278faa6ac2ae084ca6ccee224ea1
+        void Defense();
         
 };
 
@@ -136,6 +104,10 @@ class Enemy: public Character{
 };
 
 class Minions:Enemy{
+    private:
+        std::string name;
+        std::string enemyType;
+        Equip weapon;
     public:
         void Attack();
 
@@ -144,12 +116,19 @@ class Minions:Enemy{
 };
 
 class Boss: public Enemy{
+    private:
+        std::string name;
+        std::string race;
     public:
         void Attack();
 
         void Defense();
 
         void SpecialAttack();
+};
+
+class Combat {
+    private:
 };
 
 #endif
