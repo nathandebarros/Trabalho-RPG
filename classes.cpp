@@ -3,7 +3,6 @@
 #include <random>
 
 
-nameList = {"Dian", "Nese", "Falledrick", "Mae", "Valhein", "Dol", "Earl", "Cedria", "Azulei", "Yun", "Cybel", "Ina", "Foolly", "Skili", "Juddol", "Janver", "Viska", "Hirschendy", "Silka", "Hellsturn", "Essa", "Mykonos", "Fenton", "Tyrena", "Inqoul", "Mankov", "Derilia", "Hexema", "Wyton", "Kaedum", "Gouram", "Libertia", "Berasailles", "Juxta", "Tae’hr", "Comtol", "Gherak", "Hest", "Qony", "Masamka", "Twyll", "Tenos", "Axim", "Westrynda", "Saphros", "Olkham", "Handok", "Kemetra", "Yos", "Wentingle", "Ames", "Molosh", "Inkov", "Phasasia", "Ziedinghal", "Bregul", "Eishvack", "Lora", "Krenting", "Symbole", "Elignoir", "Keligkrul", "Qwey", "Vindinglag", "Kusakira", "Weme", "Fayd", "Rushvita", "Vulkor", "Amers", "Ortos", "Vanius", "Chandellia", "Lilikol", "Catca", "Cormus", "Yuela", "Ariban", "Tryton", "Fesscha", "Opalul", "Zakzos", "Hortimer", "Anklos", "Dushasiez", "Polop", "Mektal", "Orinphus", "Denatra", "Elkazzi", "Dyne", "Domos", "Letryal", "Manniv", "Sylestia", "Esnol", "Fasafuros", "Ghanfer", "Kahnite", "Sweyda", "Uylis", "Retenia", "Bassos", "Arkensval", "Impelos", "Grandius", "Fulcrux", "Lassahein", "Edsveda", "Earakun", "Fous", "Maas", "Basenphal", "Jubidya", "Divya", "Kosunten", "Ordayius", "Dozzer", "Gangher", "Escha", "Manchul", "Kempos", "Kulo", "Urtench", "Kesta", "Helahona", "Ryte", "Falcia", "Umannos", "Urkensvall", "Fedra", "Bulkensar", "Comia", "Tyul", "Lasendarl"}
 
 void Character::setName(void){
     std::vector<std::string> nameList = {
@@ -11,7 +10,7 @@ void Character::setName(void){
         "Azulei", "Yun", "Cybel", "Ina", "Foolly", "Skili", "Juddol", "Janver", 
         "Viska", "Hirschendy", "Silka", "Hellsturn", "Essa", "Mykonos", "Fenton", 
         "Tyrena", "Inqoul", "Mankov", "Derilia", "Hexema", "Wyton", "Kaedum", 
-        "Gouram", "Libertia", "Berasailles", "Juxta", "Tae’hr", "Comtol", "Gherak", 
+        "Gouram", "Libertia", "Berasailles", "Juxta", "Tae'hr", "Comtol", "Gherak", 
         "Hest", "Qony", "Masamka", "Twyll", "Tenos", "Axim", "Westrynda", "Saphros", 
         "Olkham", "Handok", "Kemetra", "Yos", "Wentingle", "Ames", "Molosh", "Inkov", 
         "Phasasia", "Ziedinghal", "Bregul", "Eishvack", "Lora", "Krenting", "Symbole", 
@@ -125,17 +124,23 @@ Class Player::getPlayerClass() {
 }
 
 void Player::creatPlayer(int n){
-    std::vetor<Player> players;
+    std::vector<Player> players;
     for(int i = 0; i < n; i++){
-        players[i].name = setName();
-        players[i].class = setClassName();
-        players[i].hp = setHp();
-        players[i].xp = setXp();
-        players[i].strenght = setStrenght();
-        players[i].dexterity = setDexterity();
-        players[i].constituition = setConstitution();
-        players[i].intelligence = setIntelligence();
-        players[i].wisdom = setWisdom();
-        players[i];charisma = setCharisma();
+        Player newPlayer;
+
+        newPlayer= setName();
+        newPlayer = setClassName();
+        newPlayer = setHp();
+        newPlayer = setXp();
+        newPlayer = setStrenght();
+        newPlayer = setDexterity();
+        newPlayer = setConstitution();
+        newPlayer = setIntelligence();
+        newPlayer = setWisdom();
+        newPlayer = setCharisma();
+
+        players.push_back(newPlayer);
     }
+
+    return players;
 }
