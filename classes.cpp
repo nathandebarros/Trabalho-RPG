@@ -1,9 +1,11 @@
 #include <iostream>
 #include "classes.hpp"
 #include <random>
+#include <cstdlib>
+#include <ctime>
 
-// Criação de personagem
-
+// ** CRIAÇÃO DE PERSONAGEM **
+//    setter e getter usando lista de nomes pre-definidos: 
 void Character::setName(void){
     std::vector<std::string> nameList = {
         "Dian", "Nese", "Falledrick", "Mae", "Valhein", "Dol", "Earl", "Cedria", 
@@ -103,30 +105,57 @@ std::vector<std::string> classList = {"Barbarian", "Bard", "Cleric", "Druid", "F
     playerClass = classList[std::rand() % classList.size()];
 }
 
-std::string Player::getPlayerClass() const{
+std::string Player::getPlayerClass () const{
     return playerClass;
 }
+Player::Player() {
 
-
-
-Player Player::creatPlayer(int n){
-    std::vector<Player> players;
-    for(int i = 0; i < n; i++){
-        Player newPlayer;
-
-        newPlayer.setName();
-        newPlayer.setPlayerClass();
-        newPlayer.setHp();
-        newPlayer.setXp();
-        newPlayer.setStrenght();
-        newPlayer.setDexterity();
-        newPlayer.setConstitution();
-        newPlayer.setIntelligence();
-        newPlayer.setWisdom();
-        newPlayer.setCharisma();
-
-        players.push_back(newPlayer);
+    this->setName();
+    this->setPlayerClass();
+    std::string classe = this->getPlayerClass();
+    this->setXp();
+    this->setHp();
+    if (classe ==  "Barbarian" || classe == "Fighter" || classe == "Paladin"){
+        this->hp += 5;
+        if (this->hp > 20)
+        this->hp = 20;
+    }
+    this->setStrenght();
+    if (classe == "Barbarian" || classe == "Fighter" || classe == "Paladin"){
+        this->strenght +=5;
+        if (this->strenght > 20)
+        this->strenght = 20;
+    }
+    this->setDexterity();
+    if (classe == "Rogue" || classe == "Ranger" || classe == "Monk" || classe == "Fighter"){
+        this->dexterity += 4;
+        if (this->dexterity > 20)
+        this->dexterity = 20;
+    }
+    this->setConstitution();
+    if (classe == "Barbarian" || classe == "Fighter"){
+        this->constitution += 5;
+        if (this->constitution > 20)
+        this->constitution = 20;
+    }
+    this->setIntelligence();
+    if (classe == "Wizard"){
+        this->intelligence += 5;
+        if(this->intelligence > 20)
+        this->intelligence = 20;
+    
+    }
+    this->setWisdom();
+    if (classe == " Cleric" || classe == "Druid" || classe == "Ranger" || classe == "Monk"){
+        this->wisdom += 5;
+        if (this->wisdom > 20)
+        this->wisdom = 20;
+    }
+    this->setCharisma();
+    if (classe == "Bard" || classe == "Sorcerer" || classe == "Warlock" || classe == "Paladin"){
+        this->charisma += 5;
+        if (this->charisma > 20)
+        this->charisma = 20;
     }
 
-    return players;
 }

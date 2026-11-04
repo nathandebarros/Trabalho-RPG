@@ -6,74 +6,21 @@ using namespace std;
 
 
 int main(){
-    Player players[3];
-    
-    for(int i = 0; i < 3; i++) {
-    cout << "\n=== CRIANDO O HEROI " << (i + 1) << " ===" << endl;
+    std::srand(time(std::nullptr_t(0)));
 
-    string nomeTemp;
-    cout << "Nome: ";
-    cin >> ws; 
-    getline(cin, nomeTemp);
-    players[i].setName(nomeTemp);
+    std::srand(time(0));
 
-    int hpTemp;
-    cout << "HP: ";
-    cin >> hpTemp;
-    players[i].setHp(hpTemp);
-
-    int xpTemp;
-    cout << "XP inicial: ";
-    cin >> xpTemp;
-    players[i].setXp(xpTemp);
-
-    int forcaTemp;
-    cout << "Forca: ";
-    cin >> forcaTemp;
-    players[i].setStrength(forcaTemp);
-
-    int destrezaTemp;
-    cout << "Destreza: ";
-    cin >> destrezaTemp;
-    players[i].setDexterity(destrezaTemp);
-
-    int constTemp;
-    cout << "Constituicao: ";
-    cin >> constTemp;
-    players[i].setConstitution(constTemp);
-
-    int intTemp;
-    cout << "Inteligencia: ";
-    cin >> intTemp;
-    players[i].setIntelligence(intTemp);
-
-    int sabTemp;
-    cout << "Sabedoria: ";
-    cin >> sabTemp;
-    players[i].setWisdom(sabTemp);
-
-    int carismaTemp;
-    cout << "Carisma: ";
-    cin >> carismaTemp;
-    players[i].setCharisma(carismaTemp);
-}
-
-
-cout << "\n=== FICHAS DOS PERSONAGENS ===" << endl;
-
-for(int i = 0; i < 3; i++) {
-    cout << "\nNome: " << players[i].getName() << endl;
-    cout << "Forca: " << players[i].getStrength() << endl;
-    cout << "Destreza: " << players[i].getDexterity() << endl;
-    cout << "Constituicao: " << players[i].getConstitution() << endl;
-    cout << "Sabedoria: " << players[i].getWisdom() << endl;
-    cout << "Inteligencia: " << players[i].getIntelligence() << endl;
-    cout << "Carisma: " << players[i].getCharisma() << endl;
-    cout << "HP: " << players[i].getHp() << endl;
-    cout << "XP: " << players[i].getXp() << endl;
-    cout << "------------------------" << endl;
-}
-
-
+    Player jogador;
+    std::cout << "--FICHA DE JOGADOR--\n";
+    std::cout << "Nome: " << jogador.getName() << std::endl;
+    std::cout << "Classe: " << jogador.getPlayerClass() <<std::endl;
+    std::cout << "HP: " << jogador.getHp() << std::endl;
+    std::cout << "XP: " << jogador.getXp() <<std::endl;
+    std::cout << "Forca : " << jogador.getStrenght() <<std::endl;
+    std::cout << "Destreza : " << jogador.getDexterity() <<std::endl;
+    std::cout << "Constituicao : " << jogador.getConstitution() <<std::endl;
+    std::cout << "Sabedoria : " << jogador.getWisdom() <<std::endl;
+    std::cout << "Inteligencia : " << jogador.getIntelligence() <<std::endl;
+    std::cout << "Carisma : " << jogador.getCharisma() <<std::endl;
     return 0;
 }

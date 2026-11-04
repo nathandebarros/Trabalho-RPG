@@ -1,5 +1,5 @@
-#ifndef CLASSES_H
-#define CLASSES_H
+#ifndef CLASSES_HPP
+#define CLASSES_HPP
 
 
 #include <iostream>
@@ -9,7 +9,7 @@
 
 using namespace std;
 class Character{
-    private:
+    protected:
         std::string name;
         int hp;
         int xp;
@@ -69,7 +69,7 @@ class Assistant:Character{
         void cast_a_spell();
 };
 
-class Player: Character{
+class Player: public Character{
     private:
         std::string playerClass;
         std::string race;
@@ -79,9 +79,10 @@ class Player: Character{
     public:
 
         void setPlayerClass();
-        std::string getPlayerClass();
+        std::string getPlayerClass() const;
 
-        Player creatPlayer(int n);
+        Player();
+        Player createPlayer(void);
 
         void Attack();
 
@@ -124,6 +125,7 @@ class Boss: public Enemy{
 
 class Combat {
     private:
+        int turn;
 };
 
 #endif
