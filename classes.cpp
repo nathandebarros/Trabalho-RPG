@@ -2,7 +2,7 @@
 #include "classes.hpp"
 #include <random>
 
-
+// Criação de personagem
 
 void Character::setName(void){
     std::vector<std::string> nameList = {
@@ -41,7 +41,7 @@ int Character::getHp() const{
     return hp;
 }
 
-void Character::setXp(int xpn) {
+void Character::setXp(void) {
     xp = (std::rand() % 20) + 1;
 }
 
@@ -49,7 +49,7 @@ int Character::getXp() const{
     return xp;
 }
 
-void Character::setStrenght(int strg){
+void Character::setStrenght(void){
     strenght = (std::rand() % 20) + 1;
 }
 
@@ -57,7 +57,7 @@ int Character::getStrenght() const{
     return strenght;
 }
 
-void Character::setDexterity(int dext){
+void Character::setDexterity(void){
     dexterity = (std::rand() % 20) + 1;
 }
 
@@ -65,7 +65,7 @@ int Character::getDexterity() const{
     return dexterity;
 }
 
-void Character::setConstitution(int cons){
+void Character::setConstitution(void){
     constitution = (std::rand() % 20) + 1;
 }
 
@@ -73,7 +73,7 @@ int Character::getConstitution() const{
     return constitution;
 }
 
-void Character::setIntelligence(int intel){
+void Character::setIntelligence(void){
     intelligence = (std::rand() % 20) + 1;
 }
 
@@ -82,7 +82,7 @@ int Character::getIntelligence() const{
 }
 
 
-void Character::setWisdom(int wisd){
+void Character::setWisdom(void){
     wisdom = (std::rand() % 20) + 1;
 }
 
@@ -90,7 +90,7 @@ int Character::getWisdom() const{
     return wisdom;
 }
 
-void Character::setCharisma(int chr){
+void Character::setCharisma(void){
     charisma = (std::rand() % 20) + 1;
 }
 
@@ -98,46 +98,32 @@ int Character::getCharisma() const{
     return charisma;
 }
 
-void Class::setClassName(void) {
-std::vector<std::string> nameClass = {"Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"};
-    className = nameClass[std::rand() % nameClass.size()];
+void Player::setPlayerClass(void) {
+std::vector<std::string> classList = {"Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"};
+    playerClass = classList[std::rand() % classList.size()];
 }
 
-std::string Class::getClassName() const{
-    return className;
-}
-
-void Race::setRaceName(std::string race){
-    raceName = race;
-}
-
-std::string Race::getRaceName() const{
-    return raceName;
-}
-
-void Player::setPlayerClass(Class pClass){
-    playerClass = pClass;
-}
-
-Class Player::getPlayerClass() {
+std::string Player::getPlayerClass() const{
     return playerClass;
 }
 
-void Player::creatPlayer(int n){
+
+
+Player Player::creatPlayer(int n){
     std::vector<Player> players;
     for(int i = 0; i < n; i++){
         Player newPlayer;
 
-        newPlayer= setName();
-        newPlayer = setClassName();
-        newPlayer = setHp();
-        newPlayer = setXp();
-        newPlayer = setStrenght();
-        newPlayer = setDexterity();
-        newPlayer = setConstitution();
-        newPlayer = setIntelligence();
-        newPlayer = setWisdom();
-        newPlayer = setCharisma();
+        newPlayer.setName();
+        newPlayer.setPlayerClass();
+        newPlayer.setHp();
+        newPlayer.setXp();
+        newPlayer.setStrenght();
+        newPlayer.setDexterity();
+        newPlayer.setConstitution();
+        newPlayer.setIntelligence();
+        newPlayer.setWisdom();
+        newPlayer.setCharisma();
 
         players.push_back(newPlayer);
     }

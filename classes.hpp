@@ -21,32 +21,28 @@ class Character{
         int charisma;
     
     public:
-        void setName(std::string name);
+        void setName(void);
         std::string getName() const;
-        void setHp(int hpn);
+        void setHp(void);
         int getHp() const;
-        void setXp(int xpn);
+        void setXp(void);
         int getXp() const;
-        void setStrenght(int strg);
+        void setStrenght(void);
         int getStrenght() const;
-        void setDexterity(int dext);
+        void setDexterity(void);
         int getDexterity() const;
-        void setConstitution(int cons);
+        void setConstitution(void);
         int getConstitution() const;
-        void setIntelligence(int intel);
+        void setIntelligence(void);
         int getIntelligence() const;
-        void setWisdom(int wisd);
+        void setWisdom(void);
         int getWisdom() const;
-        void setCharisma(int chr);
+        void setCharisma(void);
         int getCharisma() const;
         
 
-        void Attack(){
-            cout << "ataque básico";
-        };
-        void Defense() {
-            cout << "defesa";
-        };
+        void Attack();
+        void Defense();
 };
 
 class Dice{
@@ -69,8 +65,8 @@ class Loot{
 };
 
 class Assistant:Character{
-    private:
-        std::string name;
+    public:
+        void cast_a_spell();
 };
 
 class Player: Character{
@@ -83,9 +79,9 @@ class Player: Character{
     public:
 
         void setPlayerClass();
-        void getPlayerClass();
+        std::string getPlayerClass();
 
-        void creatPlayer(int n);
+        Player creatPlayer(int n);
 
         void Attack();
 
@@ -105,7 +101,6 @@ class Enemy: public Character{
 
 class Minions:Enemy{
     private:
-        std::string name;
         std::string enemyType;
         Equip weapon;
     public:
