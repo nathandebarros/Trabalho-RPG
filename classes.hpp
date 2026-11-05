@@ -12,7 +12,7 @@ class Character{
     protected:
         std::string name;
         int hp;
-        int xp;
+        int level;
         int strenght;
         int dexterity;
         int constitution;
@@ -25,8 +25,8 @@ class Character{
         std::string getName() const;
         void setHp(void);
         int getHp() const;
-        void setXp(void);
-        int getXp() const;
+        void setLevel(void);
+        int getLevel() const;
         void setStrenght(void);
         int getStrenght() const;
         void setDexterity(void);
@@ -45,16 +45,29 @@ class Character{
         void Defense();
 };
 
-class Dice{
-    int faces;
-
-    int rolldice();
-};
+//class Dice{
+//    int faces;
+//
+//    int rolldice();
+//};
 
 class Equip{
-    private:
-        std::string Name;
-        std::string Type;
+    protected:
+        std::string type;
+        std::string name;
+
+    public:
+        void setEquipType(std::string t);
+
+        std::string getEquipType() const;
+    
+        void setEquipName(std::string type);
+
+        std::string getEquipName() const;
+        //Equip() = default; 
+        
+        //Equip(std::string t, const std::vector<std::string>& names);
+        
 };
 
 
@@ -64,7 +77,7 @@ class Loot{
         std::string lootType;
 };
 
-class Assistant:Character{
+class Assistant: public Character{
     public:
         void cast_a_spell();
 };
@@ -73,16 +86,21 @@ class Player: public Character{
     private:
         std::string playerClass;
         std::string race;
-        Equip Weapon;
-        Equip Armor;
+        Equip weapon;
+        Equip armor;
 
     public:
+        void setRace(void);
+
+        std::string getRace() const;
 
         void setPlayerClass();
+
         std::string getPlayerClass() const;
 
         Player();
-        Player createPlayer(void);
+        
+        Player::createPlayers(int n);
 
         void Attack();
 
@@ -93,10 +111,14 @@ class Player: public Character{
 };
 
 class Enemy: public Character{
-    public:
-        Loot itemDrop;
-        Equip Weapon;
-        Equip Armor;
+    private:
+        Equip weapon;
+        Equip armor;
+
+    public: 
+        Enemy();
+        Loot itemDrop();
+
 
 };
 
@@ -126,6 +148,13 @@ class Boss: public Enemy{
 class Combat {
     private:
         int turn;
+        Player player;
+        Enemy enemy;
+        Boss boss;
+
+    public: 
+
+    
 };
 
 #endif

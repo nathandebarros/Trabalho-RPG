@@ -31,6 +31,7 @@ void Character::setName(void){
     name = nameList[std::rand()  % nameList.size()];
 }
 
+//          **CRIAÇÃO DOS ATRIBUTOS**
 std::string Character::getName() const{
     return name;
 }
@@ -43,12 +44,12 @@ int Character::getHp() const{
     return hp;
 }
 
-void Character::setXp(void) {
-    xp = (std::rand() % 20) + 1;
+void Character::setLevel(void) {
+    level = (std::rand() % 20) + 1;
 }
 
-int Character::getXp() const{
-    return xp;
+int Character::getLevel() const{
+    return level;
 }
 
 void Character::setStrenght(void){
@@ -105,15 +106,56 @@ std::vector<std::string> classList = {"Barbarian", "Bard", "Cleric", "Druid", "F
     playerClass = classList[std::rand() % classList.size()];
 }
 
+void Player::setRace(void){
+    std::vector<std::string>Races = {"Humano", "Elfo", "Ogro", "Anão"};
+    race = Races[std::rand() % Races.size()];
+}
+
+std::string Player::getRace() const{
+    return race;
+}
+
 std::string Player::getPlayerClass () const{
     return playerClass;
 }
+
+// Setter e Getter de equipamento :
+void Equip::setEquipType(std::string t) {
+    type = t;
+}
+
+std::string Equip::getEquipType(void) const{
+    return type;
+}
+
+void Equip::setEquipName(std::string type){
+    if (type == "Armas Leves"){
+        std::vector<string> names = {"Espada Longa", "Machado Grande", "Martelo de Guerra"};
+        name = names[std::rand() % names.size()];
+    } else if (type == "Armas Leves"){
+        std::vector<string> names = {"Adaga", "Espada Curta", "Cimitarra"};
+        name = names[std::rand() % names.size()];
+    } else if (type == "Armas de Longa Distancia"){
+        std::vector<string> names = {"Arco Longo", "Besta"};
+        name = names[std::rand() % names.size()];
+    } else if (type == "Armas Magicas"){
+        std::vector<string> names = {"Cajado", "Simbolo Sagrado", "Varinha"};
+        name = names[std::rand() % names.size()];
+    }
+}
+
+std::string Equip::getEquipName() const {
+    return name;
+}
+//Equip::Equip(std::string t, const std::vector<std::string>& names) : type(t) , name(names.empty() ? "Nenhum" : names[std::rand() % names.size()]) {}
+
 Player::Player() {
 
     this->setName();
     this->setPlayerClass();
     std::string classe = this->getPlayerClass();
-    this->setXp();
+    this->setRace();
+    this->setLevel();
     this->setHp();
     if (classe ==  "Barbarian" || classe == "Fighter" || classe == "Paladin"){
         this->hp += 5;
@@ -157,5 +199,70 @@ Player::Player() {
         if (this->charisma > 20)
         this->charisma = 20;
     }
+    if(classe == "Barbarian" || classe == "Paladin" || classe == "Fighter"){
+        this->weapon.setEquipType("Armas Marciais");
+        std::string tipo = this->weapon.getEquipType();
+        if (tipo == "Armas Marcias"){
+            this->weapon.setEquipName(tipo);
+        }
+    } else if (classe == "Monk" || classe == "Rogue"){
+        this->weapon.setEquipType("Armas Leves");
+        std::string tipo = this->weapon.getEquipType();
+        if (tipo == "Armas Leves"){
+            this->weapon.setEquipName(tipo);
+        }
+    } else if (classe == "Ranger"){
+        this->weapon.setEquipType("Armas de Longa Distancia");
+        std::string tipo = this->weapon.getEquipType();
+        if (tipo == "Armas de Longa Distancia"){
+            this->weapon.setEquipName(tipo);
+        }
+    } else{
+        this->weapon.setEquipType("Armas Magicas");
+        std::string tipo = this->weapon.getEquipType();
+        if (tipo == "Armas Magicas"){
+            this->weapon.setEquipName(tipo);
+        }
+    }
+    
+    
+    
+        //if (classe == "Barbarian" || classe == "Paladin" || classe == "Fighter"){
+        //    this->weapon = Equip("Armas Marcias", {"Espada Longa", "Machado Grande", "Martelo de Guerra",});
+        //} else if (classe == "Monk" || classe == "Rogue"){
+        //    this->weapon = Equip("Armas Leves", {"Adaga", "Espada Curta", "Cimitarra"});
+        //} else if (classe == "Ranger"){
+        //    this->weapon = Equip("Armas de Longa Distancia", {"Arco Longo", "Besta"});
+        //} else 
+        //    this->weapon = Equip("Armas Magicas", {"Cajado", "Simbolo Sagrado", "Varinha"});
 
 }
+
+Player::createPlayers(int n){
+    
+}
+
+//    **CONSTRUTOR DOS MINIONS**
+
+Enemy::Enemy() {
+    this->name = "Morto-Vivo";
+    this->setHp();
+    this->setLevel();
+    this->setStrenght();
+    this->strenght = 13;
+    this->setDexterity();
+    this->dexterity = 6;
+    this->setConstitution();
+    this->constitution = 16;
+    this->setIntelligence();
+    this->intelligence = 3;
+    this->setWisdom();
+    this->wisdom = 6;
+    this->setCharisma();
+    this->charisma = 5;
+}
+
+
+
+
+
