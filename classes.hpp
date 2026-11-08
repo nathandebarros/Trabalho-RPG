@@ -13,6 +13,7 @@ class Character{
         std::string name;
         int hp;
         int level;
+        int xp;
         int strenght;
         int dexterity;
         int constitution;
@@ -23,10 +24,14 @@ class Character{
     public:
         void setName(void);
         std::string getName() const;
+        void setHp(int n);
         void setHp(void);
         int getHp() const;
         void setLevel(void);
+        void setLevel(int n);
         int getLevel() const;
+        void setXp(void);
+        int getXp() const;
         void setStrenght(void);
         int getStrenght() const;
         void setDexterity(void);
@@ -41,8 +46,8 @@ class Character{
         int getCharisma() const;
         
 
-        void Attack();
-        void Defense();
+        int Attack();
+        int Defense();
 };
 
 //class Dice{
@@ -52,11 +57,16 @@ class Character{
 //};
 
 class Equip{
-    protected:
+    private:
         std::string type;
         std::string name;
+        int damage;
+        int defense;
 
     public:
+
+        Equip();
+
         void setEquipType(std::string t);
 
         std::string getEquipType() const;
@@ -64,23 +74,26 @@ class Equip{
         void setEquipName(std::string type);
 
         std::string getEquipName() const;
-        //Equip() = default; 
         
-        //Equip(std::string t, const std::vector<std::string>& names);
+        void setEquipDamage(std::string name);
+
+        int getEquipDamage() const;
+
+        void setEquipDefense(void);
+
+        int getEquipDefense() const;
         
 };
 
 
 class Loot{
-    public:
+    private:
         std::string lootName;
         std::string lootType;
+
 };
 
-class Assistant: public Character{
-    public:
-        void cast_a_spell();
-};
+
 
 class Player: public Character{
     private:
@@ -99,15 +112,28 @@ class Player: public Character{
         std::string getPlayerClass() const;
 
         Player();
+
+        std::string getWeaponName() const;
+
+        std::string getWeaponType() const;
         
-        Player::createPlayers(int n);
+        int getWeaponDamage() const;
 
-        void Attack();
+        std::string getArmorType() const;
 
-        void SpecialAttack();
+        int getArmorDefense() const;
 
-        void Defense();
+        int Attack();
+
+        std::string specialAttack(std::string n);
+
+        //void Defense();
         
+};
+
+class Assistant{
+    public:
+        void cast_a_spell(std::vector<Player>& jogadores);
 };
 
 class Enemy: public Character{
@@ -116,33 +142,30 @@ class Enemy: public Character{
         Equip armor;
 
     public: 
-        Enemy();
         Loot itemDrop();
 
 
 };
 
-class Minions:Enemy{
+class Minion:public Enemy{
     private:
         std::string enemyType;
-        Equip weapon;
     public:
-        void Attack();
+        Minion();
+        void attack();
 
-        void Defense();
+        void defense();
 
 };
 
 class Boss: public Enemy{
-    private:
-        std::string name;
-        std::string race;
     public:
-        void Attack();
+        Boss();
+        void attack();
 
-        void Defense();
+        void defense();
 
-        void SpecialAttack();
+        std::string specialAttack(void);
 };
 
 class Combat {

@@ -2,7 +2,7 @@
 #include "classes.hpp"
 #include <random>
 #include <cstdlib>
-#include <ctime>
+
 
 // ** CRIAÇÃO DE PERSONAGEM **
 //    setter e getter usando lista de nomes pre-definidos: 
@@ -36,6 +36,10 @@ std::string Character::getName() const{
     return name;
 }
 
+void Character::setHp(int n){
+    hp = n;
+}
+
 void Character::setHp(void) {
     hp = (std::rand() % 20) + 1;
 }
@@ -46,6 +50,10 @@ int Character::getHp() const{
 
 void Character::setLevel(void) {
     level = (std::rand() % 20) + 1;
+}
+
+void Character::setLevel(int n){
+    level = n;
 }
 
 int Character::getLevel() const{
@@ -101,8 +109,9 @@ int Character::getCharisma() const{
     return charisma;
 }
 
+// DIMINUI UM POUCO AS CLASSES PARA FICAR MAIS FÁCIL DE FAZER POR HORA
 void Player::setPlayerClass(void) {
-std::vector<std::string> classList = {"Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"};
+std::vector<std::string> classList = {"Barbarian", "Ranger",  "Rogue", "Wizard"};
     playerClass = classList[std::rand() % classList.size()];
 }
 
@@ -119,6 +128,15 @@ std::string Player::getPlayerClass () const{
     return playerClass;
 }
 
+
+//classe Equip
+Equip::Equip(){
+    type = "Padrao";
+    name = "Qualquer";
+    damage = 0;
+    defense = 0;
+}
+
 // Setter e Getter de equipamento :
 void Equip::setEquipType(std::string t) {
     type = t;
@@ -129,7 +147,7 @@ std::string Equip::getEquipType(void) const{
 }
 
 void Equip::setEquipName(std::string type){
-    if (type == "Armas Leves"){
+    if (type == "Armas Marciais"){
         std::vector<string> names = {"Espada Longa", "Machado Grande", "Martelo de Guerra"};
         name = names[std::rand() % names.size()];
     } else if (type == "Armas Leves"){
@@ -144,10 +162,68 @@ void Equip::setEquipName(std::string type){
     }
 }
 
+void Equip::setEquipDamage(std::string name) {
+    if (name == "Espada Longa" || name == "Machado Grande" || name == "Martelo de Guerra"){
+        damage = 4;
+    } else if (name == "Adaga" || name == "Espada Curta" || name == "Cimitarra"){
+        damage = 3;
+    } else if (name == "Arco Longo" || name == "Besta"){
+        damage = 2;
+    } else if (name == "Cajado" || name == "Simbolo Sagrado" || name == "Varinha"){
+        damage = 3;
+    }
+}
+
+int Equip::getEquipDamage() const{
+    return damage;
+}
+
 std::string Equip::getEquipName() const {
     return name;
 }
 //Equip::Equip(std::string t, const std::vector<std::string>& names) : type(t) , name(names.empty() ? "Nenhum" : names[std::rand() % names.size()]) {}
+
+std::string Player::getWeaponName() const{
+    return weapon.getEquipName();
+}
+
+std::string Player::getWeaponType() const{
+    return weapon.getEquipType();
+}
+
+int Player::getWeaponDamage() const{
+    return weapon.getEquipDamage();
+}
+
+std::string Player::getArmorType() const{
+    return armor.getEquipType();
+}
+
+int Player::getArmorDefense() const{
+    return armor.getEquipDefense();
+}
+
+void Equip::setEquipDefense() {
+    defense = (std::rand() % 3) + 1;
+}
+
+int Equip::getEquipDefense() const{
+    return defense;
+}
+
+std::string Player::specialAttack(std::string n){
+    std::string ataque_especial;
+    if (n == "Barbarian"){
+        ataque_especial = "Furia";
+    } else if (n == "Rogue"){
+        ataque_especial = "Esquiva Sobrenatural";
+    } else if (n == "Ranger") {
+        ataque_especial = "Disparo Multiplo";
+    } else if (n == "Wizard") {
+        ataque_especial = "Bola de Fogo";
+    }
+    return ataque_especial;
+}
 
 Player::Player() {
 
@@ -155,57 +231,60 @@ Player::Player() {
     this->setPlayerClass();
     std::string classe = this->getPlayerClass();
     this->setRace();
-    this->setLevel();
+    this->setLevel(1);
+    if (this->level == 20){
+        this->level = 19;
+    }
     this->setHp();
-    if (classe ==  "Barbarian" || classe == "Fighter" || classe == "Paladin"){
+    if (classe ==  "Barbarian"){
         this->hp += 5;
         if (this->hp > 20)
         this->hp = 20;
     }
     this->setStrenght();
-    if (classe == "Barbarian" || classe == "Fighter" || classe == "Paladin"){
-        this->strenght +=5;
+    if (classe == "Barbarian"){
+        this->strenght += 7;
         if (this->strenght > 20)
         this->strenght = 20;
     }
     this->setDexterity();
-    if (classe == "Rogue" || classe == "Ranger" || classe == "Monk" || classe == "Fighter"){
-        this->dexterity += 4;
+    if (classe == "Rogue" || classe == "Ranger"){
+        this->dexterity += 7;
         if (this->dexterity > 20)
         this->dexterity = 20;
     }
     this->setConstitution();
-    if (classe == "Barbarian" || classe == "Fighter"){
+    if (classe == "Barbarian"){
         this->constitution += 5;
         if (this->constitution > 20)
         this->constitution = 20;
     }
     this->setIntelligence();
     if (classe == "Wizard"){
-        this->intelligence += 5;
+        this->intelligence += 7;
         if(this->intelligence > 20)
         this->intelligence = 20;
     
     }
     this->setWisdom();
-    if (classe == " Cleric" || classe == "Druid" || classe == "Ranger" || classe == "Monk"){
+    if (classe == "Ranger"){
         this->wisdom += 5;
         if (this->wisdom > 20)
         this->wisdom = 20;
     }
     this->setCharisma();
-    if (classe == "Bard" || classe == "Sorcerer" || classe == "Warlock" || classe == "Paladin"){
+    if (classe == "Rogue"){
         this->charisma += 5;
         if (this->charisma > 20)
         this->charisma = 20;
     }
-    if(classe == "Barbarian" || classe == "Paladin" || classe == "Fighter"){
+    if(classe == "Barbarian"){
         this->weapon.setEquipType("Armas Marciais");
         std::string tipo = this->weapon.getEquipType();
-        if (tipo == "Armas Marcias"){
+        if (tipo == "Armas Marciais"){
             this->weapon.setEquipName(tipo);
         }
-    } else if (classe == "Monk" || classe == "Rogue"){
+    } else if (classe == "Rogue"){
         this->weapon.setEquipType("Armas Leves");
         std::string tipo = this->weapon.getEquipType();
         if (tipo == "Armas Leves"){
@@ -217,13 +296,29 @@ Player::Player() {
         if (tipo == "Armas de Longa Distancia"){
             this->weapon.setEquipName(tipo);
         }
-    } else{
+    } else if (classe == "Wizard") {
         this->weapon.setEquipType("Armas Magicas");
         std::string tipo = this->weapon.getEquipType();
         if (tipo == "Armas Magicas"){
             this->weapon.setEquipName(tipo);
         }
     }
+
+    this->armor.setEquipName("Armadura");
+    this->armor.setEquipDefense();
+    int defesa = this->armor.getEquipDefense();
+
+    if (defesa == 1){
+        this->armor.setEquipType("Armadura Leve");
+    } else if (defesa == 2){
+        this->armor.setEquipType("Armadura Media");
+    }else if (defesa == 3){
+        this->armor.setEquipType("Armadura Pesada");
+    }
+
+    std::string nome_arma = this->getWeaponName();
+
+    this->weapon.setEquipDamage(nome_arma);
     
     
     
@@ -238,13 +333,28 @@ Player::Player() {
 
 }
 
-Player::createPlayers(int n){
-    
+int Player::Attack(){
+    int dano = getWeaponDamage();
+    return dano;
 }
+
+
+
+//std::vector<Player> Player::createPlayers(int n){
+//    std::vector<Player> jogadores;
+//
+//    for(int i = 0; i < n; i++){
+//        Player x = Player();
+//        jogadores.push_back(x);
+//    }
+//
+//    return jogadores;
+//
+//}
 
 //    **CONSTRUTOR DOS MINIONS**
 
-Enemy::Enemy() {
+Minion::Minion() {
     this->name = "Morto-Vivo";
     this->setHp();
     this->setLevel();
@@ -263,6 +373,35 @@ Enemy::Enemy() {
 }
 
 
+Boss::Boss(){
+    this->name = "Dragão Vermelho";
+    this->setHp(20);
+    this->setLevel();
+    this->setStrenght();
+    this->setDexterity();
+    this->setConstitution();
+    this->setIntelligence();
+    this->setWisdom();
+    this->setCharisma();
+
+}
+
+std::string Boss::specialAttack(void){
+    std::string ataque_especial = "Sopro de Fogo";
+    return ataque_especial;
+}
 
 
+void Assistant::cast_a_spell(std::vector<Player> &jogadores){
+    for(int i = 0; i < jogadores.size(); i++){
+        if(jogadores[i].getHp() >= 1){
+            int vida_atual = jogadores[i].getHp();
+            vida_atual += 5;
+            if (vida_atual > 20){
+                vida_atual = 20;
+            }
+            jogadores[i].setHp(vida_atual);
+        }
+    }
+}
 
