@@ -6,15 +6,6 @@
 using namespace std;
 
 
-//std::vector<Player> cretaePlayer(int n){
-//    std::vector<Player> jogadores;
-//    for(int i = 0; i < n; i++){
-//        Player x = Player();
-//        jogadores.push_back(x);
-//    }
-//
-//    return jogadores;
-//}
 
 int main(){
     std::srand(std::time(0));
