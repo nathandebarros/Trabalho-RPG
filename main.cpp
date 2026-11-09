@@ -22,7 +22,7 @@ int main(){
 
    playerStats(jogadores);
 
-   std::vector<Minion> minions = createMinions(4);
+   std::vector<Minion> minions = createMinions(3);
 
    Boss chefe = Boss();
 

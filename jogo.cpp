@@ -56,41 +56,222 @@ bool compararPlayer(const Player& a, const Player& b) {
     return a.getDexterity() > b.getDexterity();
 }
 
-bool compararMinion(const Minion& a, const Minion& b) {
-    return a.getDexterity() > b.getDexterity();
-}
 
 void combat(std::vector<Player>& jogadores, std::vector<Minion>& inimigos, Boss& chefe) {
     
     std::sort(jogadores.begin(), jogadores.end(), compararPlayer);
-    std::sort(inimigos.begin(), inimigos.end(), compararMinion);
 
     int rodada = 1;
     bool combateAtivo = true;
+    bool subiuNivel = false;
 
     while (combateAtivo) {
         std::cout << "\n=== RODADA " << rodada << " ===" << std::endl;
+        if(rodada == 3){
+            Assistant assistente = Assistant();
+            assistente.cast_a_spell(jogadores, assistente);
+        }
 
         for (int i = 0; i < jogadores.size(); i++) {
             if (jogadores[i].getHp() <= 0) continue; 
 
-            if (chefe.getHp() > 0) {
-                int dano = jogadores[i].Attack();
-                chefe.setHp(chefe.getHp() - dano);
-                
-                std::cout << jogadores[i].getName() << " (Player) atacou " << chefe.getName() << " (Boss) causando " << dano << " de dano!" << std::endl;
-            } else {
-                for (int j = 0; j < inimigos.size(); j++) {
-                    if (inimigos[j].getHp() > 0) {
+            int chance_especial = (std::rand() % 10 + 1);
+            if (chance_especial > 3){
+                if (chefe.getHp() > 0) {
+                    int dano = jogadores[i].Attack();
+                    chefe.setHp(chefe.getHp() - dano);
+
+                    std::cout << jogadores[i].getName() << " (Player) atacou " << chefe.getName() << " (Boss) causando " << dano << " de dano!" << std::endl;
+                    if(chefe.getHp() <= 0){
+                        std::cout << chefe.getName() << "foi derrotado!" << std::endl;
+                        chefe.dropLoot(jogadores[i]);
+                        jogadores[i].uparXp();
+                        if(jogadores[i].uparLevel()){
+                            subiuNivel = true;
+                            break;
+                        }
+                    }
+                } else {
+                    for (int j = 0; j < inimigos.size(); j++) {
+                        if (inimigos[j].getHp() > 0) {
+                            int dano = jogadores[i].Attack();
+                            inimigos[j].setHp(inimigos[j].getHp() - dano);
+                            if(inimigos[j].getHp() <= 0){
+                                std::cout << jogadores[i].getName() << " (Player) atacou " << inimigos[j].getName() << " " << j+1 << " causando " << dano << " de dano!" << std::endl;
+                                if(inimigos[j].getHp() <= 0){
+                                    inimigos[j].specialAttack();
+                                    if(inimigos[j].getHp() <= 0){
+                                        std::cout << inimigos[j].getName() << " " << j+1 << " foi derrotado!" << std::endl;
+                                        inimigos[j].dropLoot(jogadores[i]);
+                                        jogadores[i].uparXp();
+                                        if(jogadores[i].uparLevel()){
+                                            subiuNivel = true;
+                                            break;
+                                        }
+                                    }    
+                                }
+                            }
+                            break; 
+                        }
+                    }
+                }
+            } else if (chance_especial <= 3){
+                if (chefe.getHp() > 0) {
+                    if (jogadores[i].getPlayerClass() == "Barbarian"){
+                        std::cout << ">> " << jogadores[i].getName() << " usou " << jogadores[i].specialAttack(jogadores[i].getPlayerClass()) << "! <<" << std::endl;
+                        int dano = jogadores[i].getWeaponDamage() + 3;
+                        chefe.setHp(chefe.getHp() - dano);
+
+                        std::cout << jogadores[i].getName() << " (Player) atacou " << chefe.getName() << " (Boss) causando " << dano << " de dano!" << std::endl;
+                        if(chefe.getHp() <= 0){
+                            std::cout << chefe.getName() << "foi derrotado!" << std::endl;
+                            chefe.dropLoot(jogadores[i]);
+                            jogadores[i].uparXp();
+                            if(jogadores[i].uparLevel()){
+                                subiuNivel = true;
+                                break;
+                            }
+                        }
+                    } else if (jogadores[i].getPlayerClass() == "Ranger"){
+                        std::cout << ">> " << jogadores[i].getName() << " usou " << jogadores[i].specialAttack(jogadores[i].getPlayerClass()) << "! <<" << std::endl;
+                        int dano = jogadores[i].getWeaponDamage() * 2;
+                        chefe.setHp(chefe.getHp() - dano);
+
+                        std::cout << jogadores[i].getName() << " (Player) atacou " << chefe.getName() << " (Boss) causando " << dano << " de dano!" << std::endl;
+                        if(chefe.getHp() <= 0){
+                            std::cout << chefe.getName() << "foi derrotado!" << std::endl;
+                            chefe.dropLoot(jogadores[i]);
+                            jogadores[i].uparXp();
+                            if(jogadores[i].uparLevel()){
+                                subiuNivel = true;
+                                break;
+                            }
+                        }
+                    } else if (jogadores[i].getPlayerClass() == "Wizard"){
+                        std::cout << ">> " << jogadores[i].getName() << " usou " << jogadores[i].specialAttack(jogadores[i].getPlayerClass()) << "! <<" << std::endl;
+                        int dano = jogadores[i].getWeaponDamage() + 2;
+                        chefe.setHp(chefe.getHp() - dano);
+
+                        std::cout << jogadores[i].getName() << " (Player) atacou " << chefe.getName() << " (Boss) causando " << dano << " de dano!" << std::endl;
+                        if(chefe.getHp() <= 0){
+                            std::cout << chefe.getName() << "foi derrotado!" << std::endl;
+                            chefe.dropLoot(jogadores[i]);
+                            jogadores[i].uparXp();
+                            if(jogadores[i].uparLevel()){
+                                subiuNivel = true;
+                                break;
+                            }
+                        }
+                    }
+                    else{
                         int dano = jogadores[i].Attack();
-                        inimigos[j].setHp(inimigos[j].getHp() - dano);
-                        
-                        std::cout << jogadores[i].getName() << " (Player) atacou " << inimigos[j].getName() << " " << j+1 << " causando " << dano << " de dano!" << std::endl;
-                        break; 
+                        chefe.setHp(chefe.getHp() - dano);
+
+                        std::cout << jogadores[i].getName() << " (Player) atacou " << chefe.getName() << " (Boss) causando " << dano << " de dano!" << std::endl;
+                        if(chefe.getHp() <= 0){
+                            std::cout << chefe.getName() << "foi derrotado!" << std::endl;
+                            chefe.dropLoot(jogadores[i]);
+                            jogadores[i].uparXp();
+                            if(jogadores[i].uparLevel()){
+                                subiuNivel = true;
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    for (int j = 0; j < inimigos.size(); j++) {
+                        if (inimigos[j].getHp() > 0) {
+                            if(jogadores[i].getPlayerClass() == "Barbarian"){
+                                std::cout << ">>> " << jogadores[i].getName() << " usou " << jogadores[i].specialAttack(jogadores[i].getPlayerClass()) << "! <<<" << std::endl;
+                                int dano = jogadores[i].getWeaponDamage() + 4;
+                                inimigos[j].setHp(inimigos[j].getHp() - dano);
+
+                                std::cout << jogadores[i].getName() << " (Player) atacou " << inimigos[j].getName() << " " << j+1 << " causando " << dano << " de dano!" << std::endl;
+                                 if(inimigos[j].getHp() <= 0){
+                                    inimigos[j].specialAttack();
+                                    if(inimigos[j].getHp() <= 0){
+                                        std::cout << inimigos[j].getName() << " " << j+1 << " foi derrotado!" << std::endl;
+                                        inimigos[j].dropLoot(jogadores[i]);
+                                        jogadores[i].uparXp();
+                                        if(jogadores[i].uparLevel()){
+                                            subiuNivel = true;
+                                            break;
+                                        }
+                                    }    
+                                }
+                                break;
+                            } else if (jogadores[i].getPlayerClass() == "Wizard"){
+                                std::cout << ">>> " << jogadores[i].getName() << " usou " << jogadores[i].specialAttack(jogadores[i].getPlayerClass()) << "! <<<" << std::endl;
+                                int dano = jogadores[i].getWeaponDamage() + 3;
+                                inimigos[j].setHp(inimigos[j].getHp() - dano);
+
+                                std::cout << jogadores[i].getName() << " (Player) atacou " << inimigos[j].getName() << " " << j+1 << " causando " << dano << " de dano!" << std::endl;
+                                if(inimigos[j].getHp() <= 0){
+                                    inimigos[j].specialAttack();
+                                    if(inimigos[j].getHp() <= 0){
+                                        std::cout << inimigos[j].getName() << " " << j+1 << " foi derrotado!" << std::endl;
+                                        inimigos[j].dropLoot(jogadores[i]);
+                                        jogadores[i].uparXp();
+                                        if(jogadores[i].uparLevel()){
+                                            subiuNivel = true;
+                                            break;
+                                        }
+                                    }    
+                                }
+                                break;
+                            } else if (jogadores[i].getPlayerClass() == "Ranger"){
+                                std::cout << ">>> " << jogadores[i].getName() << " usou " << jogadores[i].specialAttack(jogadores[i].getPlayerClass()) << "! <<" << std::endl;
+                                int dano = jogadores[i].getWeaponDamage() - 1;
+                                for(int k = 0; k < inimigos.size(); k++){
+                                    if(inimigos[k].getHp() > 0){ 
+                                        inimigos[k].setHp(inimigos[k].getHp() - dano);
+                                        std::cout << jogadores[i].getName() << " (Player) atacou " << inimigos[k].getName() << " " << k+1 << " causando " << dano << " de dano!" << std::endl;
+                                        if(inimigos[j].getHp() <= 0){
+                                            inimigos[j].specialAttack();
+                                            if(inimigos[j].getHp() <= 0){
+                                                std::cout << inimigos[k].getName() << " " << k+1 << " foi derrotado!" << std::endl;
+                                                inimigos[j].dropLoot(jogadores[i]);
+                                                jogadores[i].uparXp();
+                                                if(jogadores[i].uparLevel()){
+                                                    subiuNivel = true;
+                                                    break;
+                                                }
+                                           }
+                                        }
+                                    }
+                                }
+                                break;
+                            } else {
+                                int dano = jogadores[i].Attack();
+                                inimigos[j].setHp(inimigos[j].getHp() - dano);
+
+                                std::cout << jogadores[i].getName() << " (Player) atacou " << inimigos[j].getName() << " " << j+1 << " causando " << dano << " de dano!" << std::endl;
+                                if(inimigos[j].getHp() <= 0){
+                                    inimigos[j].specialAttack();
+                                    if(inimigos[j].getHp() <= 0){
+                                        std::cout << inimigos[j].getName() << " " << j+1 << " foi derrotado!" << std::endl;
+                                        inimigos[j].dropLoot(jogadores[i]);
+                                        jogadores[i].uparXp();
+                                        if(jogadores[i].uparLevel()){
+                                            subiuNivel = true;
+                                           break;
+                                        }           
+                                    }
+                                }
+                                break;
+                            }
+                        }
+
                     }
                 }
             }
         }
+
+        if (subiuNivel){
+            std::cout << "Jogo encerrado! Um jogador subiu de nivel" << std::endl;
+            break;
+        }
+        
 
         bool todosMonstrosMortos = (chefe.getHp() <= 0);
         for (int i = 0; i < inimigos.size(); i++) {
@@ -109,16 +290,39 @@ void combat(std::vector<Player>& jogadores, std::vector<Minion>& inimigos, Boss&
             for (int j = 0; j < jogadores.size(); j++) {
                 if (jogadores[j].getHp() > 0) {
                     
-                    int dano_monstro = inimigos[i].getStrenght() / 3;
-                    int defesa_player = jogadores[j].getArmorDefense();
-                    int dano_real = dano_monstro - defesa_player;
-                    
-                    if (dano_real < 0) dano_real = 0; 
+                    if(jogadores[j].getPlayerClass() == "Rogue"){
+                        
+                        int chance_especial = (std::rand() % 10 + 1);
+                        if(chance_especial <= 3){
+                            std::cout << ">>> " << jogadores[j].getName() << " usou " << jogadores[j].specialAttack(jogadores[j].getPlayerClass()) << "! <<<" << std::endl;
+                            int dano_real = 0;
+                            std::cout << inimigos[i].getName() << " " << i+1 << " atacou " << jogadores[j].getName() << " causando " << dano_real << " de dano!" << std::endl;
+                            break;
+                        } else {
+                            int dano_monstro = inimigos[i].getStrenght() / 3;
+                            int defesa_player = jogadores[j].getArmorDefense();
+                            int dano_real = dano_monstro - defesa_player;
 
-                    jogadores[j].setHp(jogadores[j].getHp() - dano_real);
-                    
-                    std::cout << inimigos[i].getName() << " " << i+1 << " atacou " << jogadores[j].getName() << " causando " << dano_real << " de dano!" << std::endl;
-                    break; 
+                            if (dano_real < 0) dano_real = 0; 
+
+                            jogadores[j].setHp(jogadores[j].getHp() - dano_real);
+
+                            std::cout << inimigos[i].getName() << " " << i+1 << " atacou " << jogadores[j].getName() << " causando " << dano_real << " de dano!" << std::endl;
+                            break; 
+                        }
+                    }else{
+
+                            int dano_monstro = inimigos[i].getStrenght() / 3;
+                            int defesa_player = jogadores[j].getArmorDefense();
+                            int dano_real = dano_monstro - defesa_player;
+
+                            if (dano_real < 0) dano_real = 0; 
+
+                            jogadores[j].setHp(jogadores[j].getHp() - dano_real);
+
+                            std::cout << inimigos[i].getName() << " " << i+1 << " atacou " << jogadores[j].getName() << " causando " << dano_real << " de dano!" << std::endl;
+                            break; 
+                    }
                 }
             }
         }
@@ -126,6 +330,43 @@ void combat(std::vector<Player>& jogadores, std::vector<Minion>& inimigos, Boss&
         if (chefe.getHp() > 0) {
             for (int j = 0; j < jogadores.size(); j++) {
                 if (jogadores[j].getHp() > 0) {
+                    if(jogadores[j].getPlayerClass() == "Rogue"){
+                        int chance_especial = (std::rand() % 10 + 1);
+                        if (chance_especial <= 3){
+                            std::cout << ">>> " << jogadores[j].getName() << " usou " << jogadores[j].specialAttack(jogadores[j].getPlayerClass()) << "! <<<" << std::endl;
+
+                            if (std::rand() % 4 == 0) {
+                                std::cout << ">>> " << chefe.getName() << " usou " << chefe.specialAttack() << "! <<<" << std::endl;
+                                
+                            }
+                        
+                            int dano_real = 0;
+
+                            if (dano_real < 0) dano_real = 0; 
+                        
+                            jogadores[j].setHp(jogadores[j].getHp() - dano_real);
+
+                            std::cout << chefe.getName() << " (Boss) atacou " << jogadores[j].getName() << " causando " << dano_real << " de dano!" << std::endl;
+                            break; 
+                        } else {
+                            int dano_chefe = chefe.getStrenght() / 2; 
+                            int defesa_player = jogadores[j].getArmorDefense();
+
+                            if (std::rand() % 4 == 0) {
+                                std::cout << ">>> " << chefe.getName() << " usou " << chefe.specialAttack() << "! <<<" << std::endl;
+                                dano_chefe += 4; 
+                            }
+                        
+                            int dano_real = dano_chefe - defesa_player;
+
+                            if (dano_real < 0) dano_real = 0; 
+                        
+                            jogadores[j].setHp(jogadores[j].getHp() - dano_real);
+
+                            std::cout << chefe.getName() << " (Boss) atacou " << jogadores[j].getName() << " causando " << dano_real << " de dano!" << std::endl;
+                            break; 
+                        }
+                    }
                     
                     int dano_chefe = chefe.getStrenght() / 2; 
                     int defesa_player = jogadores[j].getArmorDefense();

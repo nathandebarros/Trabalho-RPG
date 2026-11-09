@@ -31,6 +31,10 @@ void Character::setName(void){
     name = nameList[std::rand()  % nameList.size()];
 }
 
+void Character::setName(std::string n){
+    name = n;
+}
+
 //          **CRIAÇÃO DOS ATRIBUTOS**
 std::string Character::getName() const{
     return name;
@@ -58,6 +62,14 @@ void Character::setLevel(int n){
 
 int Character::getLevel() const{
     return level;
+}
+
+void Character::setXp(int n) {
+    xp = n;
+}
+
+int Character::getXp() const{
+    return xp;
 }
 
 void Character::setStrenght(void){
@@ -203,6 +215,10 @@ int Player::getArmorDefense() const{
     return armor.getEquipDefense();
 }
 
+void Equip::setEquipDefense(int n){
+    defense = n;
+}
+
 void Equip::setEquipDefense() {
     defense = (std::rand() % 3) + 1;
 }
@@ -223,6 +239,27 @@ std::string Player::specialAttack(std::string n){
         ataque_especial = "Bola de Fogo";
     }
     return ataque_especial;
+}
+
+void Player::upgradeArmor(int bonus) {
+    int defesa_atual = this->armor.getEquipDefense();
+    this->armor.setEquipDefense(defesa_atual + bonus);
+}
+
+void Player::uparXp(){
+    this->setXp(this->getXp() + 50);
+    std::cout << this->getName() << " ganhou +50 pontos de XP" << std::endl;
+}
+
+bool Player::uparLevel(){
+    if(this->getXp() >= 100){
+        this->setLevel(this->getLevel() + 1);
+        this->setXp(this->getXp() - 100);
+        std::cout << this->getName() << " subiu de nível" << std::endl;
+        return true;
+    }
+
+    return false;
 }
 
 Player::Player() {
@@ -321,15 +358,6 @@ Player::Player() {
     this->weapon.setEquipDamage(nome_arma);
     
     
-    
-        //if (classe == "Barbarian" || classe == "Paladin" || classe == "Fighter"){
-        //    this->weapon = Equip("Armas Marcias", {"Espada Longa", "Machado Grande", "Martelo de Guerra",});
-        //} else if (classe == "Monk" || classe == "Rogue"){
-        //    this->weapon = Equip("Armas Leves", {"Adaga", "Espada Curta", "Cimitarra"});
-        //} else if (classe == "Ranger"){
-        //    this->weapon = Equip("Armas de Longa Distancia", {"Arco Longo", "Besta"});
-        //} else 
-        //    this->weapon = Equip("Armas Magicas", {"Cajado", "Simbolo Sagrado", "Varinha"});
 
 }
 
@@ -339,18 +367,6 @@ int Player::Attack(){
 }
 
 
-
-//std::vector<Player> Player::createPlayers(int n){
-//    std::vector<Player> jogadores;
-//
-//    for(int i = 0; i < n; i++){
-//        Player x = Player();
-//        jogadores.push_back(x);
-//    }
-//
-//    return jogadores;
-//
-//}
 
 //    **CONSTRUTOR DOS MINIONS**
 
@@ -386,21 +402,54 @@ Boss::Boss(){
 
 }
 
+void Boss::dropLoot(Player& y){
+    std::cout << ">>> O " << this->getName() << " deixou cair um aprimoramento de armadura!" << std::endl;
+    std::cout << ">>> " << y.getName() << " ganhou +2 pontos de Defesa!" << std::endl;
+    y.upgradeArmor(2);
+}
+
+void Minion::dropLoot(Player& y){
+    std::cout << ">>> O " << this->getName() << " deixou cair um aprimoramento de armadura!" << std::endl;
+    std::cout << ">>> " << y.getName() << " ganhou +1 pontos de Defesa!" << std::endl;
+    y.upgradeArmor(1);
+}
+
+void Minion::specialAttack(){
+    if(this->getHp() <= 0){
+        int chance_especial = (std::rand() % 5 + 1);
+        if(chance_especial == 1){
+            std::cout << this->getName() << " ressurge com 3 pontos de vida! " << std::endl;
+            this->setHp(3);
+        }
+    }
+}
+
 std::string Boss::specialAttack(void){
     std::string ataque_especial = "Sopro de Fogo";
     return ataque_especial;
 }
 
+Assistant::Assistant(){
+    this->setName("Mestre dos Magos");
+}
 
-void Assistant::cast_a_spell(std::vector<Player> &jogadores){
+void Assistant::cast_a_spell(std::vector<Player> &jogadores, Assistant& x){
+    std::cout << ">> " << x.getName() << " Apareceu e usou o elixir da vida <<" << std::endl;
+    std::cout << "Os jogadores mortos ganham 5 pontos de Vida. Todos os jogadores vivos ganham 7 pontos de vida!" << std::endl;
     for(int i = 0; i < jogadores.size(); i++){
-        if(jogadores[i].getHp() >= 1){
-            int vida_atual = jogadores[i].getHp();
-            vida_atual += 5;
-            if (vida_atual > 20){
-                vida_atual = 20;
+        
+        if(jogadores[i].getHp() == 0){
+            int nova_vida = jogadores[i].getHp();
+            nova_vida += 5;
+            
+            jogadores[i].setHp(nova_vida);
+        } else{
+            int nova_vida = jogadores[i].getHp() + 7;
+            if (nova_vida > 20){
+                jogadores[i].setHp(20);
+            }else{
+                jogadores[i].setHp(nova_vida);
             }
-            jogadores[i].setHp(vida_atual);
         }
     }
 }

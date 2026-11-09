@@ -23,6 +23,7 @@ class Character{
     
     public:
         void setName(void);
+        void setName(std::string n);
         std::string getName() const;
         void setHp(int n);
         void setHp(void);
@@ -30,7 +31,7 @@ class Character{
         void setLevel(void);
         void setLevel(int n);
         int getLevel() const;
-        void setXp(void);
+        void setXp(int n);
         int getXp() const;
         void setStrenght(void);
         int getStrenght() const;
@@ -47,7 +48,7 @@ class Character{
         
 
         int Attack();
-        int Defense();
+
 };
 
 //class Dice{
@@ -79,6 +80,8 @@ class Equip{
 
         int getEquipDamage() const;
 
+        void setEquipDefense(int n);
+
         void setEquipDefense(void);
 
         int getEquipDefense() const;
@@ -86,12 +89,7 @@ class Equip{
 };
 
 
-class Loot{
-    private:
-        std::string lootName;
-        std::string lootType;
 
-};
 
 
 
@@ -119,7 +117,12 @@ class Player: public Character{
         
         int getWeaponDamage() const;
 
+        void uparXp();
+        bool uparLevel();
+
         std::string getArmorType() const;
+
+        void upgradeArmor(int bonus);
 
         int getArmorDefense() const;
 
@@ -131,9 +134,10 @@ class Player: public Character{
         
 };
 
-class Assistant{
+class Assistant: public Character{
     public:
-        void cast_a_spell(std::vector<Player>& jogadores);
+        Assistant();
+        void cast_a_spell(std::vector<Player>& jogadores, Assistant& x);
 };
 
 class Enemy: public Character{
@@ -142,42 +146,32 @@ class Enemy: public Character{
         Equip armor;
 
     public: 
-        Loot itemDrop();
+        void dropLoot() ;
 
 
 };
 
 class Minion:public Enemy{
-    private:
-        std::string enemyType;
+
     public:
         Minion();
-        void attack();
 
-        void defense();
+        void dropLoot(Player &y);
+
+        void specialAttack();
+
+
 
 };
 
 class Boss: public Enemy{
     public:
         Boss();
-        void attack();
 
-        void defense();
+        void dropLoot(Player &y);
+
 
         std::string specialAttack(void);
-};
-
-class Combat {
-    private:
-        int turn;
-        Player player;
-        Enemy enemy;
-        Boss boss;
-
-    public: 
-
-    
 };
 
 #endif

@@ -11,8 +11,6 @@ std::vector<Minion> createMinions(int n);
 
 bool compararPlayer(const Player &a, const Player &b);
 
-bool compararMinion(const Minion &a, const Minion &b);
-
 void combat(std::vector<Player> &jogadores, std::vector<Minion> &inimigos, Boss &chefe);
 
 #endif
